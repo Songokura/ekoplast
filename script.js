@@ -1,6 +1,6 @@
 /* ============================================================
    ЭКО ПЛАСТ - скрипт страницы.
-   Плиты и раскрытие дугой витка · виток трубы в герое (разматывается по скроллу) ·
+   Плиты и раскрытие дугой витка · ролик героя с подписями по кадрам ·
    видео по видимости + модальный плеер · прайс: фильтр по диаметру и обновление
    из Google-таблицы · перевод RU/KZ (?lang= сильнее localStorage) · меню ·
    бегущая лента · лента видео с кнопками · WhatsApp с названием позиции ·
@@ -9,7 +9,11 @@
 (function(){
 "use strict";
 var WA = "77477213502";                  /* основной WhatsApp ЭКО ПЛАСТ */
-var SHEET = "https://docs.google.com/spreadsheets/d/1_FjwEbMOW9eNdZz-Kf_2cw7hKoArWUKjsk3XDv7XaoQ/gviz/tq?tqx=out:csv";
+/* export отдаёт ячейки как есть. gviz угадывает тип колонки по большинству и молча
+   выбрасывает «чужие» ячейки («до 16» среди чисел, «2» среди «1.6»), поэтому он только запасной */
+var SHEET_ID = "1_FjwEbMOW9eNdZz-Kf_2cw7hKoArWUKjsk3XDv7XaoQ";
+var SHEET = "https://docs.google.com/spreadsheets/d/" + SHEET_ID + "/export?format=csv";
+var SHEET_GVIZ = "https://docs.google.com/spreadsheets/d/" + SHEET_ID + "/gviz/tq?tqx=out:csv";
 var RED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 var HAS_IO = typeof IntersectionObserver === "function";
 var root = document.documentElement;
@@ -96,7 +100,10 @@ var KZ = {
 "ft.p":"Алматыда ПНД құбырлары мен фитингтерін өндіру. Сумен жабдықтау, кәріз, кабель қорғау. Диаметрі 16-250 мм, 5 / 6 / 12 м кесінділер және орамдар.",
 "ft.addr":"Алматы, Сейфуллин даңғылы, 235","ft.h":"дс-сб 9:00-17:00",
 "ft.copy":"© 2026 ЭКО ПЛАСТ. Алматыда ПНД құбырларын өндіру.",
-"bar.call":"Қоңырау"
+"bar.call":"Қоңырау",
+"r1":"Қойма · Ø16-250 мм құбырлар","r2":"Экструзиялық желі · өз цехымыз","r3":"Құбырды орамға орау","r4":"Орам жөнелтуге дайын",
+"so.h1":"Цех пен жөнелтулер: Instagram","so.h2":"Өндіріс бейнелері: TikTok","so.m1":"Instagram: цех пен жөнелтулер","so.m2":"TikTok: бейнелер",
+"so.v1":"Көбірек бейне: TikTok","so.v2":"Цех пен жөнелтулер: Instagram"
 };
 
 /* готовые тексты WhatsApp: название позиции - отдельной строкой */
@@ -191,7 +198,7 @@ function applyLang(lang){
   setWaLinks();
   pressureLang();
   fillTicker();
-  requestAnimationFrame(function(){ fitText(); coilLayout(); update(); });
+  requestAnimationFrame(function(){ fitText(); update(); });
 }
 /* ?lang=kk в URL сильнее localStorage: русское объявление не должно открыть казахскую версию */
 function initLang(){
@@ -236,11 +243,11 @@ function fillTicker(){
 }
 var tkTimer;
 addEventListener("resize", function(){
-  coilLayout(); update();
+  update();
   clearTimeout(tkTimer);
-  tkTimer = setTimeout(function(){ fillTicker(); fitText(); coilLayout(); update(); lanes.forEach(function(l){ l.state(); }); }, 200);
+  tkTimer = setTimeout(function(){ fillTicker(); fitText(); update(); lanes.forEach(function(l){ l.state(); }); }, 200);
 });
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ fillTicker(); fitText(); coilLayout(); update(); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ fillTicker(); fitText(); update(); });
 
 /* ---------------- МЕНЮ ---------------- */
 var burger = document.getElementById("burger");
@@ -273,57 +280,6 @@ document.addEventListener("click", function(e){
 var hdr = document.getElementById("hdr");
 function hdrState(){ if (hdr) hdr.classList.toggle("solid", scrollY > 40); }
 
-/* ---------------- ВИТОК ТРУБЫ В ГЕРОЕ ----------------
-   Кривая постоянной кривизны k длиной L: при k = 1/R это 2,4 витка бухты,
-   при k -> 0 - прямая труба. Кривизну ведёт --stay героя: чем дальше
-   прокрутка, тем прямее нитка. Точка привязки - верх витка: разматываясь,
-   труба ложится в прямую линию на уровне верха бухты, лишние петли уходят
-   вниз, за край экрана. */
-var coil = document.getElementById("coil");
-var coilPaths = coil ? [].slice.call(coil.querySelectorAll("path")) : [];
-var CG = {cx:0, cy:0, R:0, ok:false, W:0, H:0};
-var TURNS = 2.4;
-function coilLayout(){
-  if (!coil) return;
-  var W = innerWidth, H = innerHeight;
-  var hin = document.querySelector(".hero-in"), tk = document.querySelector(".ticker-w");
-  var tkH = tk ? tk.offsetHeight : 46;
-  var hh = HH(), R, cx, cy;
-  if (W > 760) {
-    var top = hh + 10, bottom = H - tkH - 10;
-    R = Math.min(0.165 * W, (bottom - top) / 2 * 0.86);
-    cx = W * (W < 1100 ? 0.77 : 0.75); cy = (top + bottom) / 2 + R * 0.05;
-  } else {
-    var tb = hin ? hin.offsetTop + hin.offsetHeight : H * 0.6;
-    var t2 = tb + 10, b2 = H - tkH - 12;
-    R = Math.min(0.3 * W, (b2 - t2) / 2);
-    cx = W * 0.5; cy = (t2 + b2) / 2;
-  }
-  CG.ok = R >= 40; CG.R = R; CG.cx = cx; CG.cy = cy; CG.W = W; CG.H = H;
-  coil.classList.toggle("hide", !CG.ok);
-  coil.setAttribute("viewBox", "0 0 " + W + " " + H);
-  var sw = {"c-glow": Math.max(18, R * 0.34), "c-body": Math.max(12, R * 0.22), "c-core": Math.max(6, R * 0.12), "c-hi": Math.max(2, R * 0.03), "c-stripe": Math.max(2, R * 0.036)};
-  coilPaths.forEach(function(p){ p.setAttribute("stroke-width", sw[p.getAttribute("class")].toFixed(1)); });
-}
-var lastCoilT = -1;
-function coilDraw(t){
-  if (!coil || !CG.ok) return;
-  if (Math.abs(t - lastCoilT) < 0.002 && lastCoilT >= 0) return;
-  lastCoilT = t;
-  var R = CG.R, L = 2 * Math.PI * R * TURNS;
-  var k = (1 - t) / R, N = 220, d = "";
-  var drift = 0.042 * (1 - t);
-  for (var i = 0; i <= N; i++) {
-    var s = -L / 2 + L * i / N, x, y;
-    if (k < 1e-6) { x = s; y = 0; }
-    else { x = Math.sin(k * s) / k; y = (1 - Math.cos(k * s)) / k; }
-    x = CG.cx + x + s * drift;
-    y = CG.cy - R + y;
-    d += (i ? "L" : "M") + x.toFixed(1) + " " + y.toFixed(1);
-  }
-  coilPaths.forEach(function(p){ p.setAttribute("d", d); });
-}
-
 /* ---------------- ПЛИТЫ ----------------
    Один слушатель scroll через rAF. На каждую обёртку .pw пишем
    --enter / --exit / --stay и --open (раскрытие дугой), герою ещё --f (интро). */
@@ -348,10 +304,7 @@ function update(){
     pw.style.setProperty("--open",  easeInOut(clamp((enter - 0.28) / 0.66)).toFixed(3));
     pw.classList.toggle("gone", exit >= 1);
     pw.classList.toggle("on", enter > 0.6);
-    if (pw === heroPw) {
-      pw.style.setProperty("--f", introK.toFixed(3));
-      if (exit < 1) coilDraw(easeInOut(stay));
-    }
+    if (pw === heroPw) pw.style.setProperty("--f", introK.toFixed(3));
   });
   hdrState();
   /* липкая панель: после 55 % первого экрана, прячется на контактах */
@@ -360,12 +313,10 @@ function update(){
     bar.classList.toggle("show", scrollY > H * 0.55 && !onKont);
   }
 }
-coilLayout();
 if (RED) {
   root.classList.add("no-plate");
   root.classList.add("no-intro");
   if (hero) hero.classList.add("on");
-  coilDraw(0);
   addEventListener("scroll", function(){ hdrState(); if (bar) bar.classList.toggle("show", scrollY > innerHeight * 0.55); }, {passive:true});
   hdrState();
 } else {
@@ -374,8 +325,8 @@ if (RED) {
     if (tick) return; tick = true;
     requestAnimationFrame(function(){ tick = false; update(); });
   }, {passive:true});
-  addEventListener("load", function(){ coilLayout(); update(); });
-  /* интро 1250 мс: виток прочерчивается, текст поднимается.
+  addEventListener("load", update);
+  /* интро 1250 мс: текст поднимается, витрина с роликом выезжает.
      Пропускаем при хэше / прокрутке - человек из рекламы сразу видит собранный экран. */
   var skip = location.hash || scrollY > 80;
   if (skip) {
@@ -400,7 +351,7 @@ if (RED) {
     setTimeout(function(){ if (!introDone) { introDone = true; introK = 1; update(); } }, 2200);
   }
 }
-window.plateSync = function(){ introDone = true; introK = 1; if (hero) hero.classList.add("on"); coilLayout(); update(); };
+window.plateSync = function(){ introDone = true; introK = 1; if (hero) hero.classList.add("on"); update(); };
 addEventListener("hashchange", function(){ root.classList.add("no-intro"); });
 
 /* ---------------- ПОЯВЛЕНИЕ В КАТАЛОЖНЫХ СЕКЦИЯХ ---------------- */
@@ -595,17 +546,43 @@ function rebuildTable(rows){
   if (pd) pd.textContent = ("0" + dt.getDate()).slice(-2) + "." + ("0" + (dt.getMonth() + 1)).slice(-2) + "." + dt.getFullYear();
   return true;
 }
-function loadSheet(){
-  if (!pbody || typeof fetch !== "function" || location.protocol === "file:") return;
+/* зашитые в HTML строки - по ключу «диаметр|SDR»: ими закрываем пустые ячейки,
+   если пришлось читать через gviz */
+var BASE = {};
+function baseSnapshot(){
+  if (!pbody) return;
+  [].forEach.call(pbody.querySelectorAll("tr[data-d]"), function(tr){
+    var td = tr.children;
+    BASE[tr.dataset.d + "|" + numOf(td[1].textContent)] = [td[0].textContent, td[1].textContent, td[2].textContent, (td[3].dataset.raw || td[3].textContent), td[4].textContent, td[5].textContent, td[6].textContent];
+  });
+}
+function fillBlanks(rows){
+  for (var i = 1; i < rows.length; i++) {
+    var r = rows[i], b = BASE[numOf(r[0]) + "|" + numOf(r[1])];
+    if (!b) continue;
+    for (var k = 0; k < 7; k++) if (r[k] === undefined || String(r[k]).trim() === "") r[k] = b[k];
+  }
+  return rows;
+}
+function getCSV(url){
   var ctl = typeof AbortController === "function" ? new AbortController() : null;
   if (ctl) setTimeout(function(){ ctl.abort(); }, 8000);
-  fetch(SHEET, {signal: ctl ? ctl.signal : undefined, cache: "no-store"})
+  return fetch(url, {signal: ctl ? ctl.signal : undefined, cache: "no-store"})
     .then(function(r){ if (!r.ok) throw 0; return r.text(); })
     .then(function(t){
-      if (t.length < 100 || t.length > 200000 || /<html/i.test(t.slice(0, 300))) return;
+      if (t.length < 100 || t.length > 200000 || /<html/i.test(t.slice(0, 300))) throw 0;
       var rows = parseCSV(t);
-      if (rows.length < 5) return;
-      rebuildTable(rows);
+      if (rows.length < 5) throw 0;
+      return rows;
+    });
+}
+function loadSheet(){
+  if (!pbody || typeof fetch !== "function" || location.protocol === "file:") return;
+  baseSnapshot();
+  getCSV(SHEET)
+    .then(function(rows){ if (!rebuildTable(rows)) throw 0; })
+    .catch(function(){
+      return getCSV(SHEET_GVIZ).then(function(rows){ rebuildTable(fillBlanks(rows)); });
     })
     .catch(function(){});
 }
@@ -629,19 +606,47 @@ if (form) form.addEventListener("submit", function(e){
   window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(t), "_blank", "noopener");
 });
 
-/* ---------------- ВИДЕО ГЕРОЯ ----------------
-   Петля без звука подключается после интро и только на нормальном соединении. */
+/* ---------------- РОЛИК ГЕРОЯ ----------------
+   Монтаж из 4 кадров клиента. Петля без звука подключается после интро и только
+   на нормальном соединении. Подпись и полоска прогресса идут по времени ролика:
+   границы кадров - середины переходов в монтаже (hero-reel.mp4, 9,3 с). */
 (function(){
   var v = document.getElementById("hero-video"); if (!v) return;
+  var caps = [].slice.call(document.querySelectorAll("#reel-cap span"));
+  var bars = [].slice.call(document.querySelectorAll("#reel-bar i"));
+  var CUT = [0, 3.8, 5.7, 7.2];
+  var cur = -1;
+  function paint(){
+    var t = v.currentTime || 0, d = v.duration || 9.29, k = 0;
+    for (var i = 0; i < CUT.length; i++) if (t >= CUT[i]) k = i;
+    if (k !== cur) {
+      cur = k;
+      caps.forEach(function(c, i){ c.classList.toggle("on", i === k); });
+    }
+    bars.forEach(function(b, i){
+      var s0 = CUT[i], s1 = i + 1 < CUT.length ? CUT[i + 1] : d;
+      b.style.setProperty("--p", i < k ? 1 : (i > k ? 0 : clamp((t - s0) / (s1 - s0)).toFixed(3)));
+    });
+  }
+  var raf = 0;
+  function loop(){ paint(); raf = v.paused ? 0 : requestAnimationFrame(loop); }
+  v.addEventListener("playing", function(){ v.classList.add("is-live"); if (!raf) raf = requestAnimationFrame(loop); });
+  v.addEventListener("seeked", paint);
   var save = navigator.connection && (navigator.connection.saveData || /2g/.test(navigator.connection.effectiveType || ""));
   if (RED || save) return;
-  v.addEventListener("playing", function(){ v.classList.add("is-live"); });
+  function play(){ var p = v.play(); if (p && p.catch) p.catch(function(){}); }
   setTimeout(function(){
     if (!v.getAttribute("src")) { v.src = v.dataset.src; v.load(); }
-    var p = v.play(); if (p && p.catch) p.catch(function(){});
+    play();
   }, 600);
+  /* вне экрана и в фоновой вкладке - пауза */
+  var vis = true;
+  if (HAS_IO) new IntersectionObserver(function(es){
+    vis = es[0].isIntersecting;
+    if (!vis) v.pause(); else if (v.getAttribute("src") && !document.hidden) play();
+  }, {threshold: .05}).observe(document.getElementById("reel"));
   document.addEventListener("visibilitychange", function(){
-    if (document.hidden) v.pause(); else if (v.getAttribute("src")) { var p = v.play(); if (p && p.catch) p.catch(function(){}); }
+    if (document.hidden) v.pause(); else if (v.getAttribute("src") && vis) play();
   });
 })();
 
