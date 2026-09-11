@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /_project/
 
-Sitemap: https://songokura.github.io/ekoplast/sitemap.xml
+Sitemap: https://eco-plast.kz/sitemap.xml
