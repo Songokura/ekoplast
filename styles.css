@@ -300,6 +300,51 @@ html:not(.js) .rv{opacity:1;transform:none}
 .big p{color:var(--steel2);margin-top:8px;font-size:15px;max-width:560px}
 @media(max-width:760px){.big{grid-template-columns:1fr;padding:22px 20px}.big .btn{width:100%}}
 
+/* ---------- прайс фитингов: карточки в гамме сайта ---------- */
+.sec-fit{padding-top:40px}
+@media(min-width:761px){.sec-fit{padding-top:60px}}
+.anc{position:absolute;top:0;left:0;width:1px;height:1px}
+.ftabs{display:inline-flex;gap:4px;padding:4px;border-radius:14px;background:#fff;border:1px solid var(--lined);margin-bottom:14px;max-width:100%}
+.ftab{display:inline-flex;align-items:center;gap:9px;border:0;background:transparent;border-radius:10px;padding:12px 18px;font:700 15px/1 var(--ft);color:var(--text);cursor:pointer;transition:background .25s,color .25s}
+.ftab b{font:600 12px/1 var(--ft);padding:5px 8px;border-radius:999px;background:rgba(19,121,199,.1);color:var(--blue)}
+.ftab:hover{color:var(--blue)}
+.ftab.is-active{background:var(--navy);color:#fff}
+.ftab.is-active b{background:var(--lime);color:#0B1A05}
+.flegend{font-size:13.5px;color:var(--mut);margin-bottom:22px}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(236px,1fr));gap:14px;align-items:start}
+.fcd{display:flex;flex-direction:column;background:#fff;border:1px solid var(--lined);border-radius:18px;overflow:hidden;transition:transform .35s,box-shadow .35s,border-color .35s}
+.fcd[hidden],.fcd.cut{display:none}
+.fcd:hover{transform:translateY(-4px);box-shadow:0 22px 44px -28px rgba(11,24,38,.45);border-color:rgba(19,121,199,.35)}
+.fc-ph{position:relative;aspect-ratio:4/3;background:#fff;overflow:hidden}
+.fc-ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.fcd:hover .fc-ph img{transform:scale(1.05)}
+.fc-ph::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,var(--stripe),var(--lime))}
+.fcd h3{background:var(--navy);color:#fff;font:700 18px/1.1 var(--fd);text-transform:uppercase;letter-spacing:.01em;padding:12px 16px}
+.fc-t{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;margin:6px 0 2px}
+.fc-t th{font:600 10.5px/1 var(--ft);letter-spacing:.1em;text-transform:uppercase;color:var(--mut);text-align:left;padding:8px 16px 6px}
+.fc-t th:last-child,.fc-t td:last-child{text-align:right}
+.fc-t td{padding:6px 16px;font-size:14px;color:var(--text);border-top:1px solid rgba(11,24,38,.06);white-space:nowrap}
+.fc-t td:last-child{font-weight:700;color:var(--blue)}
+.fcd:not(.open) .fc-t tbody tr:nth-child(n+6){display:none}
+.fc-more{align-self:flex-start;margin:4px 16px 0;border:0;background:none;padding:6px 0;font:600 13px/1 var(--ft);color:var(--blue);cursor:pointer;border-bottom:1px dashed rgba(19,121,199,.5)}
+.fc-more:hover{color:var(--navy)}
+.fc-wa{margin:12px 16px 16px;height:44px;font-size:14px;padding:0 16px}
+.fall{display:flex;justify-content:center;margin-top:26px}
+.fall[hidden]{display:none}
+.fall b{font-weight:600;opacity:.7}
+@media(max-width:760px){
+  .ftabs{display:flex;width:100%}.ftab{flex:1;justify-content:center;padding:11px 10px;font-size:14px}
+  .fgrid{grid-template-columns:1fr 1fr;gap:10px}
+  .fcd{border-radius:14px}
+  .fcd h3{font-size:15px;padding:10px 11px}
+  .fc-t th{padding:7px 10px 5px;font-size:9.5px}
+  .fc-t td{padding:5px 10px;font-size:12.5px}
+  .fc-more{margin:4px 10px 0;font-size:12px}
+  .fc-wa{margin:10px;height:40px;font-size:12.5px;padding:0 10px;gap:6px}
+  .fall .btn{width:100%}
+}
+@media(max-width:360px){.fc-wa svg{display:none}}
+
 /* ---------- этапы: список с номерами + мозаика фото ---------- */
 .et{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
 .steps{display:grid;gap:8px}

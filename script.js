@@ -91,7 +91,7 @@ var KZ = {
 "v4.h":"Кабельге арналған ПНД құбыры","v4.p":"Кабельді зондпен тарту","v4.a":"Бейне кадры: кабель қорғауға арналған ПНД құбыры","v4.aria":"Көру: кабельге арналған ПНД құбыры",
 
 "k.k":"Байланыс","k.h":"<em>Өндіріске</em> келіңіз","k.l":"Алматы, Сейфуллин даңғылы, 235. Цехты көрсетеміз, диаметр мен SDR таңдаймыз, қоймадан жөнелтеміз.",
-"k.ph":"Телефондар · WhatsApp","k.ad":"Мекенжай","k.adv":"Алматы, Сейфуллин даңғылы, 235<small>өндіріс, қойма және фитингтер шоурумы</small>","k.hr":"Кесте","k.hrv":"дс-сб 9:00-17:00<small>жексенбі - демалыс</small>","k.net":"Желіде","k.gis":"2GIS-те ашу",
+"k.ph":"Телефон · WhatsApp","k.ad":"Мекенжай","k.adv":"Алматы, Сейфуллин даңғылы, 235<small>өндіріс, қойма және фитингтер шоурумы</small>","k.hr":"Кесте","k.hrv":"дс-сб 9:00-17:00<small>жексенбі - демалыс</small>","k.net":"Желіде","k.gis":"2GIS-те ашу",
 "z.h":"Есепке өтінім","z.l":"Диаметрін, метражын және қаланы жазыңыз - жұмыс уақытында WhatsApp-та жауап береміз.",
 "z.name":"Атыңыз","z.nameph":"Сізге қалай жүгінуге болады","z.phone":"Телефон","z.what":"Не керек","z.whatph":"Ø110 SDR 17, 300 м, Алматы",
 "z.agree":"Өтінім бойынша байланысу үшін дербес деректерімді өңдеуге келісемін.","z.send":"WhatsApp-қа жіберу",
@@ -103,7 +103,11 @@ var KZ = {
 "bar.call":"Қоңырау",
 "r1":"Қойма · Ø16-250 мм құбырлар","r2":"Экструзиялық желі · өз цехымыз","r3":"Құбырды орамға орау","r4":"Орам жөнелтуге дайын",
 "so.h1":"Цех пен жөнелтулер: Instagram","so.h2":"Өндіріс бейнелері: TikTok","so.m1":"Instagram: цех пен жөнелтулер","so.m2":"TikTok: бейнелер",
-"so.v1":"Көбірек бейне: TikTok","so.v2":"Цех пен жөнелтулер: Instagram"
+"so.v1":"Көбірек бейне: TikTok","so.v2":"Цех пен жөнелтулер: Instagram",
+"nav.ft":"Фитингтер","b.fprice":"Фитинг прайсы","a.ftabs":"Фитингтер бөлімі",
+"f.k":"Фитингтер","f.h":"<em>Фитингтер</em> прайсы","f.l":"ПНД құбырларына арналған компрессиялық фитингтер және суару фитингтері - 58 позиция. Бағасы - данасына, теңгемен.",
+"f.t1":"ПНД құбырларына","f.t2":"Суаруға","f.lg":"НР - сыртқы бұранда, ВР - ішкі бұранда. Өлшемі: құбыр диаметрі, мм × бұранда, дюйм.",
+"fk.sz":"Өлшемі","fk.pr":"Бағасы, ₸","fk.all":"Барлық өлшемдер","fk.less":"Жию","fk.ask":"Бар-жоғын білу","f.more":"Барлығын көрсету","f.fewer":"Жию"
 };
 
 /* готовые тексты WhatsApp: название позиции - отдельной строкой */
@@ -113,14 +117,16 @@ ru:{
   cat:"Здравствуйте! Интересует цена:\n{t}\nДиаметр и метраж: ",
   schet:"Здравствуйте! Прошу выставить счёт на ПНД трубы.\nПозиции (диаметр, SDR, метраж): ",
   big:"Здравствуйте! Нужна труба большого диаметра (свыше 250 мм).\nДиаметр, SDR и метраж: ",
-  kontakty:"Здравствуйте! Пишу с сайта ЭКО ПЛАСТ. Вопрос: "
+  kontakty:"Здравствуйте! Пишу с сайта ЭКО ПЛАСТ. Вопрос: ",
+  fit:"Здравствуйте! Интересует фитинг:\n{t}\nРазмер и количество: "
 },
 kk:{
   hero:"Сәлеметсіз бе! ЭКО ПЛАСТ сайтынан жазып отырмын. ПНД құбырлары керек:\n",
   cat:"Сәлеметсіз бе! Бағасы қызықтырады:\n{t}\nДиаметрі мен метражы: ",
   schet:"Сәлеметсіз бе! ПНД құбырларына шот қоюыңызды сұраймын.\nПозициялар (диаметрі, SDR, метражы): ",
   big:"Сәлеметсіз бе! Үлкен диаметрлі құбыр керек (250 мм-ден жоғары).\nДиаметрі, SDR және метражы: ",
-  kontakty:"Сәлеметсіз бе! ЭКО ПЛАСТ сайтынан жазып отырмын. Сұрақ: "
+  kontakty:"Сәлеметсіз бе! ЭКО ПЛАСТ сайтынан жазып отырмын. Сұрақ: ",
+  fit:"Сәлеметсіз бе! Фитинг қызықтырады:\n{t}\nӨлшемі мен саны: "
 }};
 
 var TICK = ["Водоснабжение","Канализация","Защита кабеля","Фитинги","Ø16-250 мм","Бухты и отрезки","ПЭ100","ГОСТ","Своё производство"];
@@ -136,6 +142,7 @@ function snapshot(){
   document.querySelectorAll("[data-i-ph]").forEach(function(el){ RU[el.dataset.iPh] = el.getAttribute("placeholder"); });
   var t = document.querySelector("title[data-i-t]"); if (t) RU[t.dataset.iT] = t.textContent;
   RU["c.none"] = "Нет позиций с таким диаметром";
+  RU["fk.less"] = "Свернуть"; RU["f.fewer"] = "Свернуть";
 }
 function pick(k, kk){ return (kk && KZ[k] !== undefined) ? KZ[k] : RU[k]; }
 function curLang(){ return root.lang === "kk" ? "kk" : "ru"; }
@@ -148,7 +155,7 @@ function setWaLinks(){
   document.querySelectorAll("[data-wa]").forEach(function(a){
     var key = a.dataset.wa, t = WA_TXT[L][key] || WA_TXT[L].hero;
     if (t.indexOf("{t}") > -1) {
-      var card = a.closest(".pp"), h = card ? card.querySelector("h2") : null;
+      var card = a.closest(".pp, .fcd"), h = card ? card.querySelector("h2, h3") : null;
       t = t.replace("{t}", h ? h.textContent.trim() : "");
     }
     a.href = "https://wa.me/" + (a.dataset.num || WA) + "?text=" + encodeURIComponent(t);
@@ -187,6 +194,11 @@ function applyLang(lang){
   });
   var t = document.querySelector("title[data-i-t]");
   if (t) { var tv = pick(t.dataset.iT, kk); if (tv !== undefined) t.textContent = tv; }
+  /* каталог фитингов: казахский текст лежит прямо в data-kz */
+  document.querySelectorAll("[data-kz]").forEach(function(el){
+    if (el.dataset.ru === undefined) el.dataset.ru = el.textContent;
+    el.textContent = kk ? el.dataset.kz : el.dataset.ru;
+  });
   var og = document.querySelector('meta[property="og:locale"]');
   if (og) og.setAttribute("content", kk ? "kk_KZ" : "ru_RU");
   document.querySelectorAll(".lang button").forEach(function(b){
@@ -197,6 +209,7 @@ function applyLang(lang){
   try { localStorage.setItem("ep-lang", kk ? "kk" : "ru"); } catch(e){}
   setWaLinks();
   pressureLang();
+  fitLabels();
   fillTicker();
   requestAnimationFrame(function(){ fitText(); update(); });
 }
@@ -588,6 +601,61 @@ function loadSheet(){
 }
 window.epRebuild = rebuildTable;
 
+/* ---------------- ПРАЙС ФИТИНГОВ ----------------
+   Две вкладки (ПНД / полив), в каждой сначала LIMIT карточек и кнопка «Показать все».
+   В карточке видно 5 размеров, остальные - по кнопке. Якоря #fitingi-pnd / #fitingi-poliv
+   открывают нужную вкладку (под рекламу). */
+var fgrid = document.getElementById("fgrid"), fall = document.getElementById("fall");
+var fitCat = "pnd", fitAll = false;
+/* лимит кратен числу колонок сетки, чтобы последний ряд был полным */
+function fitLimit(){
+  var cols = fgrid ? getComputedStyle(fgrid).gridTemplateColumns.split(" ").length : 4;
+  return cols * (cols >= 3 ? 2 : 3);
+}
+function fitLabels(){
+  if (!fgrid) return;
+  [].forEach.call(fgrid.querySelectorAll(".fc-more"), function(b){
+    var open = b.closest(".fcd").classList.contains("open");
+    b.innerHTML = open ? T("fk.less") : T("fk.all") + " · " + b.dataset.n;
+  });
+  if (fall) fall.firstElementChild.textContent = T(fitAll ? "f.fewer" : "f.more");
+}
+function fitApply(){
+  if (!fgrid) return;
+  var cards = [].slice.call(fgrid.querySelectorAll(".fcd")), n = 0, total = 0, lim = fitLimit();
+  cards.forEach(function(c){
+    var on = c.dataset.cat === fitCat;
+    c.hidden = !on;
+    if (on) { total++; c.classList.toggle("cut", !fitAll && n >= lim); n++; } else c.classList.remove("cut");
+  });
+  document.querySelectorAll(".ftab").forEach(function(b){
+    var on = b.dataset.cat === fitCat;
+    b.classList.toggle("is-active", on); b.setAttribute("aria-selected", on ? "true" : "false");
+  });
+  if (fall) {
+    fall.parentElement.hidden = total <= lim;
+    document.getElementById("fall-n").textContent = fitAll ? "" : "· " + total;
+  }
+  fitLabels();
+}
+function fitTab(cat){ fitCat = cat; fitAll = false; fitApply(); }
+document.querySelectorAll(".ftab").forEach(function(b){ b.addEventListener("click", function(){ fitTab(b.dataset.cat); }); });
+if (fall) fall.addEventListener("click", function(){
+  fitAll = !fitAll; fitApply();
+  if (!fitAll) { var sec = document.getElementById("fitingi-ceny"); scrollTo({top: sec.getBoundingClientRect().top + scrollY - HH(), behavior: RED ? "auto" : "smooth"}); }
+});
+if (fgrid) fgrid.addEventListener("click", function(e){
+  var b = e.target.closest(".fc-more"); if (!b) return;
+  b.closest(".fcd").classList.toggle("open"); fitLabels();
+});
+function fitHash(id){ if (id === "fitingi-poliv") fitTab("poliv"); else if (id === "fitingi-pnd") fitTab("pnd"); }
+document.addEventListener("click", function(e){
+  var a = e.target.closest ? e.target.closest('a[href^="#fitingi-"]') : null;
+  if (a) fitHash(a.getAttribute("href").slice(1));
+}, true);
+fitHash(location.hash.slice(1));
+addEventListener("resize", function(){ if (!fitAll) fitApply(); });
+
 /* ---------------- ФОРМА → WhatsApp ---------------- */
 var form = document.getElementById("form");
 if (form) form.addEventListener("submit", function(e){
@@ -657,5 +725,6 @@ fillTicker();
 fitText();
 hdrState();
 applyFilter();
+fitApply();
 loadSheet();
 })();
