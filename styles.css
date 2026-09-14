@@ -503,3 +503,9 @@ form{display:grid;gap:12px;margin-top:20px}
   .hero-in > *,.plate .txt > *,.rv{opacity:1;transform:none}
   .reel .ri{opacity:1;transform:none}
 }
+
+/* монтаж */
+.mt-list{grid-template-columns:repeat(4,1fr)}
+.mt-cta{border:1px solid var(--line)}
+@media(max-width:940px){.mt-list{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.mt-list{grid-template-columns:1fr}}
